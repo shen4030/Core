@@ -39,5 +39,5 @@ if(class_exists($className)){
 		exit('404');
 	}
 }else{
-	echo "asdasd";
+	echo "暂未开放";
 }
