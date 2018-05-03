@@ -150,3 +150,17 @@ if(!function_exists('dump')){
             return $output;
     }
 }
+
+if(!function_exists('get_article_img'))
+{
+    function get_article_img($content, $isEncode = true)
+    {
+        if($isEncode){
+            $content = htmlspecialchars_decode($content);
+        }
+    
+        $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
+        preg_match_all($pattern,$content,$result);
+        return reset(end($result));
+    }
+}
