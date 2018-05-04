@@ -18,7 +18,7 @@ class RedisClient{
 		if(isset(self::$instance) && self::$instance instanceof self){
 			return self::$instance;
 		}
-		self::$instance = new self($host, $port);
+		self::$instance = new self();
 		return self::$instance;
 	}
 
