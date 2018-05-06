@@ -206,7 +206,10 @@ class Model{
         if(is_string($field)){
             $field = trim($field);
             $where = $this->getWhereParse();
-            $sql = "SELECT $field FROM $this->tableName WHERE $where";
+            $sql = "SELECT $field FROM $this->tableName";
+            if($where){
+                $sql .= ' WHERE $where';
+            }
             $stmt = $this->getDataStmt($sql);
             $result = $stmt->fetchColumn(0);
             $this->clearParse();
@@ -269,6 +272,12 @@ class Model{
         }
         $this->limit = sprintf('%d , %d', $start, $limit);
         return $this;
+    }
+
+    public function page($pageNumber, $pageSize = 10)
+    {
+        $startIndex = ceil((intval($pageNumber) - 1) * $pageSize);
+        return $this->limit($startIndex, $pageSize); 
     }
 
     public function save(array $data)

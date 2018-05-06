@@ -164,3 +164,31 @@ if(!function_exists('get_article_img'))
         return reset(end($result));
     }
 }
+
+if(!function_exists('show_content'))
+{
+    function show_content($content, $pageNumber = 200)
+    {
+        $content = htmlspecialchars_decode(str_replace(' ', '', $content));
+        $content = strip_tags($content);
+        if(mb_strlen($content) > $pageNumber){
+            $result = mb_substr($content, 0, $pageNumber) . '...';
+        }else{
+            $result = $content;
+        }
+        return trim($result);
+    }
+}
+
+if(!function_exists('pagination'))
+{
+    function pagination($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $param = [])
+    {
+        if(empty($currentPageNumber)){
+            $currentPageNumber = \Core\Http\Request::instance()->param('currentPage');
+        }
+        $page = new \Core\Tool\Page($currentPageNumber, $pageSizeNumber, $dataCountNumber, $param);
+        return $page->getPageHtml();
+    }
+}
+
