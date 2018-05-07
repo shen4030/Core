@@ -208,7 +208,7 @@ class Model{
             $where = $this->getWhereParse();
             $sql = "SELECT $field FROM $this->tableName";
             if($where){
-                $sql .= ' WHERE $where';
+                $sql .= " WHERE $where";
             }
             $stmt = $this->getDataStmt($sql);
             $result = $stmt->fetchColumn(0);

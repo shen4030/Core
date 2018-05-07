@@ -27,11 +27,16 @@ class Cache{
 
     public function getValueByKey($key)
     {
-        $this->redisClient->get($key);
+        return $this->redisClient->get($key);
     }
 
     public function setValueByKey($key, $value, $time = 3600)
     {
-        $this->redisClient->set($key, $value, $time);
+        if(is_array($value)){
+            $result = $this->redisClient->hset($key, $value, $time);
+        }else{
+            $result = $this->redisClient->set($key, $value, $time);
+        }
+        return strtolower($result) == 'ok' ? true : false;
     }
 }
