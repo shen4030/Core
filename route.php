@@ -1,6 +1,12 @@
 <?php
 
-$pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : [];
+$pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+
+$routeConfig = \Core\Config::getConfigByKey('ROUTE_SETTING');
+if(isset($routeConfig[$pathInfo]) && $routeConfig[$pathInfo]){
+    $pathInfo = $routeConfig[$pathInfo];
+}
+
 $module = '';
 $className = '';
 $action = '';

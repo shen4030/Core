@@ -118,12 +118,6 @@ if(!function_exists('show_status')) {
     }
 }
 
-function get_first_img($html)
-{
-    preg_match ("<img.*src=[\"](.*?)[\"].*?>",$html, $match);
-    return reset($match);
-}
-
 if(!function_exists('dump')){
     function dump($var, $echo=true, $label=null, $strict=true) {
         $label = ($label === null) ? '' : rtrim($label) . ' ';
