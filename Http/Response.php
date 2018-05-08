@@ -17,6 +17,7 @@ class Response{
 		}
 		unset($param);
 		include_once VIEW_DOCUMENT . $htmlSrc . '.php';
+		exit;
 	}
 
 	public static function jsonReturn($data)

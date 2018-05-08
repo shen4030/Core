@@ -186,3 +186,16 @@ if(!function_exists('pagination'))
     }
 }
 
+if(!function_exists('get_detail_route'))
+{
+    function get_detail_route($path)
+    {
+        $result = 'Blog/Article/detail';
+        if(is_string($path) && $path){
+            preg_match('/\d+/', $path, $match);
+            $_GET['articleId'] = isset($match[0]) ? $match[0] : 0;
+        }
+        return $result;
+    }
+}
+
