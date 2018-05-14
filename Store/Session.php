@@ -26,7 +26,7 @@ class Session{
         $result = $_SESSION;
         $key = trim($key);
         if(!empty($key)){
-            $result = $_SESSION[$key] ? $_SESSION[$key] : null;
+            $result = isset($_SESSION[$key]) && $_SESSION[$key] ? $_SESSION[$key] : null;
         }
         return $result;
     }
