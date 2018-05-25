@@ -78,6 +78,11 @@ class Model{
         return false;
     }
 
+    /**
+     * where语句
+     * @param string $where
+     * @return $this
+     */
     public function where($where = '')
     {
         if(is_string($where)){
@@ -118,6 +123,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “等于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereEq($field, $value)
     {
         $field = trim($field);
@@ -126,6 +137,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “大于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereGt($field, $value)
     {
         $field = trim($field);
@@ -134,6 +151,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “小于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereLt($field, $value)
     {
         $field = trim($field);
@@ -142,6 +165,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “大于等于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereEgt($field, $value)
     {
         $field = trim($field);
@@ -150,6 +179,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “小鱼等于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereElt($field, $value)
     {
         $field = trim($field);
@@ -158,6 +193,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “不等于”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereNeq($field, $value)
     {
         $field = trim($field);
@@ -166,6 +207,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “IN”
+     * @param $field
+     * @param array $value
+     * @return $this
+     */
     public function whereIn($field, array $value)
     {
         $field = trim($field);
@@ -178,6 +225,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * where条件 “LIKE”
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function whereLike($field, $value)
     {
         $field = trim($field);
@@ -186,6 +239,10 @@ class Model{
         return $this;
     }
 
+    /**
+     * 返回数据集合
+     * @return array
+     */
     public function select()
     {
         $stmt = $this->getDataStmt();
@@ -193,6 +250,10 @@ class Model{
         return $stmt->fetchAll();
     }
 
+    /**
+     * 返回单一模型
+     * @return mixed
+     */
     public function find()
     {
         $stmt = $this->getDataStmt();
@@ -200,6 +261,11 @@ class Model{
         return $stmt->fetch();
     }
 
+    /**
+     * 返回某个字段的值
+     * @param $field
+     * @return mixed|string
+     */
     public function getField($field)
     {
         $result = '';
@@ -217,18 +283,33 @@ class Model{
         return $result;
     }
 
+    /**
+     * @param $alias
+     * @return $this
+     */
     public function alias($alias)
     {
         $this->alias = trim($alias);
         return $this;
     }
 
+    /**
+     * group语句
+     * @param $group
+     * @return $this
+     */
     public function group($group)
     {
         $this->group = trim($group);
         return $this;
     }
 
+    /**
+     * order语句
+     * @param $field
+     * @param string $order
+     * @return $this
+     */
     public function order($field, $order = '')
     {
         $field = trim($field);
@@ -247,6 +328,11 @@ class Model{
         return $this;
     }
 
+    /**
+     * 查询字段集合
+     * @param $field
+     * @return $this
+     */
     public function field($field)
     {
         if($field) {
@@ -261,6 +347,12 @@ class Model{
         return $this;
     }
 
+    /**
+     * limit语句
+     * @param $startIndex
+     * @param null $pageSize
+     * @return $this
+     */
     public function limit($startIndex, $pageSize = null)
     {
         if(is_null($pageSize)){
@@ -274,12 +366,22 @@ class Model{
         return $this;
     }
 
+    /**
+     * @param $pageNumber
+     * @param int $pageSize
+     * @return Model
+     */
     public function page($pageNumber, $pageSize = 10)
     {
         $startIndex = ceil((intval($pageNumber) - 1) * $pageSize);
         return $this->limit($startIndex, $pageSize); 
     }
 
+    /**
+     * 更新数据操作
+     * @param array $data
+     * @return bool|int
+     */
     public function save(array $data)
     {
         if(!$this->where){

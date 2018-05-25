@@ -25,11 +25,23 @@ class Cache{
         return self::$instance;
     }
 
+    /**
+     * 由键获取值
+     * @param $key
+     * @return bool|string
+     */
     public function getValueByKey($key)
     {
         return $this->redisClient->get($key);
     }
 
+    /**
+     * 为键设定值
+     * @param $key
+     * @param $value
+     * @param int $time
+     * @return bool
+     */
     public function setValueByKey($key, $value, $time = 3600)
     {
         if(is_array($value)){
