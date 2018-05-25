@@ -58,6 +58,7 @@ if(!function_exists('session')) {
         if (is_null($value)) {
             return $session->delValueByKey($key);
         }
+        return '';
     }
 }
 
@@ -78,6 +79,7 @@ if(!function_exists('cookie')) {
         if (is_null($value)) {
             return $cookie->delValueByKey($key);
         }
+        return '';
     }
 }
 
