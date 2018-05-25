@@ -32,7 +32,10 @@ class Cache{
      */
     public function getValueByKey($key)
     {
-        return $this->redisClient->get($key);
+        if($this->redisClient){
+            return $this->redisClient->get($key);
+        }
+        return '';
     }
 
     /**
@@ -44,6 +47,9 @@ class Cache{
      */
     public function setValueByKey($key, $value, $time = 3600)
     {
+        if(empty($this->redisClient)){
+            return '';
+        }
         if(is_array($value)){
             $result = $this->redisClient->hset($key, $value, $time);
         }else{

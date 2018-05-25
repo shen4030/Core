@@ -155,7 +155,8 @@ if(!function_exists('get_article_img'))
     
         $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
         preg_match_all($pattern,$content,$result);
-        return reset(end($result));
+        $result = end($result);
+        return reset($result);
     }
 }
 

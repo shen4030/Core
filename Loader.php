@@ -9,6 +9,7 @@ class Loader
         'Core' => DOCUMENT_ROOT . DIRECTORY_SEPARATOR . 'Core',
         'Controller' => DOCUMENT_ROOT . DIRECTORY_SEPARATOR . 'Controller',
         'Model' => DOCUMENT_ROOT . DIRECTORY_SEPARATOR . 'Model',
+        '' => DIRECTORY_SEPARATOR
     ); 
 
     /**

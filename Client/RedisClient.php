@@ -27,8 +27,12 @@ class RedisClient{
 		$config = Config::getConfigByKey('REDIS_SETTING');
 		$this->host = trim($config['DB_HOST']);
 		$this->port = $config['DB_PORT'];
-		$this->connection = new \Redis();
-		$this->connection->connect($this->host, $this->port);
+		if (class_exists('Redis')){
+            $this->connection = new \Redis();
+            $this->connection->connect($this->host, $this->port);
+        }else{
+            $this->connection = false;
+        }
 	}
 
 	public function getConn()
