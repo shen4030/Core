@@ -27,6 +27,7 @@ class Request
         }
     }
 
+    /*  */
     private function __clone(){}
 
     /**
