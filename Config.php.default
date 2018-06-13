@@ -1,0 +1,64 @@
+<?php
+namespace Core;
+
+class Config{
+
+	/* 全部配置 */
+	private static $config = [
+
+		# 站点SEO配置
+		'WEBSITE_SEO' => [
+			
+		],
+		
+		# MySql配置
+		'MYSQL_SETTING' => [
+			
+		],
+
+		# MongoDB 配置
+		'MONGODB_SETTING' => [
+			
+		],
+
+		# 密钥
+		'SERCRET_KEY' => '',
+
+		# COOKIE 设置
+		'COOKIE_SETTING' => [
+			
+		],
+
+		# Redis 配置
+		'REDIS_SETTING' => [
+			
+		],
+
+		# 文件上传配置
+		'FILE_UPLOAD' => [
+			
+		],
+
+		# 路由配置
+        'ROUTE_SETTING' => [
+            
+        ],
+
+        'ROUTE_PREG_SETTING' => [
+            
+        ],
+		
+		# 静态资源版本号
+		'STATIC_VERSION' => '1000000',
+	];
+
+	public static function getConfigByKey($key = '')
+	{
+		if(empty($key)){
+			return self::$config;
+		}
+
+		$key = strtoupper($key);
+		return self::$config[$key];
+	}
+}
