@@ -57,4 +57,9 @@ class Cache{
         }
         return strtolower($result) == 'ok' ? true : false;
     }
+
+    public function getRedisClient()
+    {
+        return $this->redisClient;
+    }
 }

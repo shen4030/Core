@@ -59,7 +59,7 @@ class MongoDbClient{
 		$data = array_merge($_id, $document);
 		$bulk = new \MongoDB\Driver\BulkWrite;
 		$bulk->insertOne($document);
-		$writeConcern = new \MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+		$writeConcern = new \MongoDB\Driver\WriteConcern(\MongoDB\Driver\WriteConcern::MAJORITY, 1000);
 		$result = $this->connection->executeBulkWrite($this->config, $bulk, $writeConcern);
 	}
 
@@ -68,7 +68,7 @@ class MongoDbClient{
 	{ 
 		$bulk = new \MongoDB\Driver\BulkWrite;
 		$bulk->update($filter, $query, $option);  
-		$writeConcern = new \MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+		$writeConcern = new \MongoDB\Driver\WriteConcern(\MongoDB\Driver\WriteConcern::MAJORITY, 1000);
 		$this->connection->executeBulkWrite($this->config, $bulk, $writeConcern);
 	}
 
@@ -76,7 +76,7 @@ class MongoDbClient{
 	public function delete($filter, $option = ['limit' => 1])
 	{
 		$this->bulk->delete($filter);
-		$writeConcern = new \MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+		$writeConcern = new \MongoDB\Driver\WriteConcern(\MongoDB\Driver\WriteConcern::MAJORITY, 1000);
 		$this->connection->executeBulkWrite($this->config, $this->bulk, $writeConcern);
 	}
 
