@@ -77,6 +77,29 @@ class File{
         return $result;
     }
 
+    public function download()
+    {
+
+
+    }
+
+    /**
+     * 删除文件
+     * @param $location
+     * @param $fileName
+     * @return bool
+     */
+    public function delete($location, $fileName = '')
+    {
+        if($fileName){
+            $realLocation = $this->dirRoot . $location . '/' . $filename;
+        }else{
+            $realLocation = $this->dirRoot . $location;
+        }   
+        $result = unlink($realLocation);
+        return $result;
+    }
+
     /**
      * 通过文件地址获取文件后缀名
      * @param $filePath
