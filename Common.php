@@ -202,6 +202,20 @@ if(!function_exists('get_detail_route'))
     }
 }
 
+if(!function_exists('get_article_route'))
+{
+    function get_article_route($path)
+    {
+        $result = 'Blog/Article/article';
+        if(is_string($path) && $path){
+            preg_match_all('/\d+/', $path, $match);dump($match);
+            $_GET['markId'] = isset($match[0]) ? $match[0] : 0;
+            $_GET['page'] = isset($match[1]) ? $match[1] : 0;
+        }
+        return $result;
+    }
+}
+
 if(!function_exists('isMobile')){
     /**
      * 判断是否是通过手机访问
