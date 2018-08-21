@@ -24,7 +24,7 @@ class Queue{
     }
 
     public function getCan(){
-
+        
     }
 
     private function __clone(){}

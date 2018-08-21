@@ -77,10 +77,33 @@ class File{
         return $result;
     }
 
-    public function download()
+    /**
+     * 下载文件
+     * @param $filePath 网站文件路径
+     */
+    public function download($filePath)
     {
+        $fileRealPath = $this->dirRoot . $filePath;
+        if(file_exists($fileRealPath)){
 
-
+            /* 获取文件大小 */
+            $fileSize = filesize($fileRealPath);  
+            $fileExtName = $this->getExtByFilePath($fileRealPath);
+            /* 返回文件流 */
+            header("Content-type: application/octet-stream");
+        
+            /* 按照字节大小返回 */
+            header("Accept-Ranges: bytes");
+            header("Accept-Length: $fileSize");
+        
+            header("Content-Disposition: attachment; filename=".time() .'.'. $fileExtName);
+            
+            $file = fopen($fileRealPath, "rb" );
+            echo fread($file, $fileSize);
+            fclose($file);
+        }else{
+            return '文件不存在';
+        }
     }
 
     /**
