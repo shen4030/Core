@@ -112,7 +112,7 @@ if(!function_exists('show_status')) {
             case 1 :
                 $result = '<font color="green">启用</font>';
                 break;
-            case 0 :
+            case 2 :
                 $result = '<font color="red">禁用</font>';
         }
 
@@ -238,6 +238,13 @@ if(!function_exists('isMobile')){
             }
         }
         return false;
+    }
+}
+
+if(!function_exists('show_get_param')){
+    function show_get_param($key, $default = '')
+    {
+        return isset($_GET[$key]) ? $_GET[$key] : $default;
     }
 }
 
