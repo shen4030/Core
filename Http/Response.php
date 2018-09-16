@@ -1,8 +1,6 @@
 <?php
 namespace Core\Http;
 
-use \Core\Http\Request;
-
 class Response{
 
 	public function __construct(){}

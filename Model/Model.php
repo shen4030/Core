@@ -406,7 +406,6 @@ class Model{
 
     public function query($query)
     {
-        $query = addslashes($query);
         return $this->client->query($query)->fetchAll();
     }
 
