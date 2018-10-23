@@ -179,13 +179,26 @@ if(!function_exists('show_content'))
 
 if(!function_exists('pagination'))
 {
-    function pagination($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $param = [])
+    function pagination($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $limitPageNumber = 10, $param = [])
     {
         if(empty($currentPageNumber)){
             $currentPageNumber = \Core\Http\Request::instance()->param('currentPage');
         }
-        $page = new \Core\Tool\Page($currentPageNumber, $pageSizeNumber, $dataCountNumber, $param);
-        return $page->getPageHtml();
+        $page = new \Core\Tool\Page($currentPageNumber, $pageSizeNumber, $dataCountNumber, $limitPageNumber, $param);
+
+        return $page->getBackPageHtml();
+    }
+}
+
+if(!function_exists('page'))
+{
+    function page($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $limitPageNumber = 10, $param = [])
+    {
+        if(empty($currentPageNumber)){
+            $currentPageNumber = \Core\Http\Request::instance()->param('currentPage');
+        }
+        $page = new \Core\Tool\Page($currentPageNumber, $pageSizeNumber, $dataCountNumber, $limitPageNumber, $param);
+        return $page->getFrontPageHtml();
     }
 }
 
@@ -202,15 +215,30 @@ if(!function_exists('get_detail_route'))
     }
 }
 
-if(!function_exists('get_article_route'))
+if(!function_exists('get_article_route_by_mark'))
 {
-    function get_article_route($path)
+    function get_article_route_by_mark($path)
     {
         $result = 'Blog/Article/article';
         if(is_string($path) && $path){
-            preg_match_all('/\d+/', $path, $match);dump($match);
-            $_GET['markId'] = isset($match[0]) ? $match[0] : 0;
-            $_GET['page'] = isset($match[1]) ? $match[1] : 0;
+            preg_match_all('/\d+/', $path, $match);
+            $match = $match[0];
+            $_GET['page'] = isset($match[0]) ? $match[0] : 1;
+            $_GET['markId'] = isset($match[1]) ? $match[1] : 0;           
+        }
+        return $result;
+    }
+}
+
+if(!function_exists('get_article_route_by_page'))
+{
+    function get_article_route_by_page($path)
+    {
+        $result = 'Blog/Article/article';
+        if(is_string($path) && $path){
+            preg_match_all('/\d+/', $path, $match);
+            $match = $match[0];
+            $_GET['page'] = isset($match[0]) ? $match[0] : 0;           
         }
         return $result;
     }

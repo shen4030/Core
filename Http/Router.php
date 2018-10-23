@@ -17,4 +17,9 @@ class Router{
         }
         return $src;
 	}
+
+	public static function getArticleUrl()
+	{
+		return BASE_URL . 'article';
+	}
 }

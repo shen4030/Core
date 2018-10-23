@@ -19,74 +19,94 @@ class Page{
 
 	private $requestParam = [];
 
-	private $limitPageNumber = 4;
+	private $limitPageNumber = 5;
 
-	public function __construct($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $param = [])
+	private $countPageNumber = 0;
+
+	public function __construct($currentPageNumber = 1, $pageSizeNumber = 10, $dataCountNumber = 0, $limitPageNumber = 10, $param = [])
 	{
 		$this->currentPageNumber = intval($currentPageNumber);
 		$this->pageSizeNumber = intval($pageSizeNumber);
+		$this->limitPageNumber = intval($limitPageNumber);
 		$this->dataCountNumber = intval($dataCountNumber);
 		$this->lastPageNumber = $this->currentPageNumber <= 1 ? 1 : $this->currentPageNumber - 1;
 		$countPageNumber = ceil($this->dataCountNumber / $this->pageSizeNumber);
+		$this->countPageNumber = $countPageNumber;
 		$this->nextPageNumber = $countPageNumber < $currentPageNumber + 1 ? $currentPageNumber : $currentPageNumber + 1;
 
 		
-		
 		if($countPageNumber > $this->limitPageNumber){
-			$size = $this->limitPageNumber - 3;dump($size);
-			if($size % 2 == 0){
-				$frontLength = $backLength = $size / 2;
+
+			// 定位中间数 
+			$middle = $this->currentPageNumber;
+
+			// 计算中间数与两边距离
+			$frontSize = $backSize = 0;
+
+			if($this->limitPageNumber % 2 == 0){
+				$size = $this->limitPageNumber / 2;
+				$frontSize = $size - 1;
+				$backSize = $size;
 			}else{
-				$frontLength = ($size + 1) / 2 ;
-				$backLength = ($size - 1) / 2;
-			}
-// dump($frontLength);dump($backLength);
-			array_push($this->realPageSize, 1);
-
-			$start = $this->currentPageNumber - $frontLength > 1 ? $this->currentPageNumber - $frontLength : 2;
-			$end = $this->currentPageNumber + $backLength > $countPageNumber -1  ? $this->currentPageNumber + $backLength - 1 : $this->limitPageNumber - 2;
-
-			dump($start);dump($end);
-
-			for($i = $start; $i <= $end; $i++ ){
-				array_push($this->realPageSize, $i);
-				if($start == $end){
-					if($start == 2){
-						array_push($this->realPageSize, $countPageNumber - 1);
-					}else{
-						array_push($this->realPageSize, 2);
-					}
-				}
+				$frontSize = $backSize = ($this->limitPageNumber - 1) / 2;
 			}
 
-			array_push($this->realPageSize, $countPageNumber);
+			if($middle - $frontSize < 1){
+				$middle = $frontSize + 1;
+			}
+			if($middle + $backSize > $countPageNumber){
+				$middle = $countPageNumber - $backSize;
+			}
+
+			$start = $middle - $frontSize;
+			$end = $middle + $backSize; 
+
 		}else{
 			$start = 1;
-			$end = $countPageNumber;
-			for($i = $start; $i <= $end; $i++ ){
-				array_push($this->realPageSize, $i);
-			}
+			$end = $countPageNumber;			
 		}
-		
 
-		
+		for($i = $start; $i <= $end; $i++ ){
+			array_push($this->realPageSize, $i);
+		}
 
 		if($param){
 			$this->requestParam = $param;
 		}
 	}
 
-	public function getPageHtml()
+	public function getBackPageHtml()
 	{
 		$html = '';
+
 		foreach ($this->realPageSize as $page) {
-			$pageNumber = ['currentPage' => $page];
-			$html .= '<li'.($page == $this->currentPageNumber ? ' class="active"' : '').'><a href="'.Router::url('', $pageNumber).'">'.$page.'</a></li>';
+			$params = array_merge($this->requestParam, ['currentPage' => $page]);
+			$html .= '<li'.($page == $this->currentPageNumber ? ' class="active"' : '').'><a href="'.Router::url('', $params).'">'.$page.'</a></li>';
 		}
-		// for($page = 1 ; $page <= $this->realPageSize ; $page++){
-			
-		// }
+
 		$html = '<div class="text-center"><ul class="pagination"><li><a href="'.Router::url('', ['currentPage'=>$this->lastPageNumber]).'">«</a></li>' .$html. '<li><a href="'.Router::url('', ['currentPage'=>$this->nextPageNumber]).'">»</a></li></ul></div>';
+
 		return $html;
+	}
+
+	public function getFrontPageHtml()
+	{
+		$url = Router::getArticleUrl();
+		$html = '<div id="page">';
+		$html .= '<div class="next fr"><a href="' . $url . $this->nextPageNumber . '.html">»</a></div>';
+		$html .= '<div class="last fr"><a href="' . $url . $this->countPageNumber . '.html">末页</a></div>';
+		$html .= '<ul class="pagingUl">';
+
+		foreach ($this->realPageSize as $page) {
+
+			$html .= '<li'.($page === $this->currentPageNumber ? ' class="active"' : '').'><a href="'.Router::url('', $pageNumber).'">'.$page.'</a></li>';
+		}
+
+		$html .= '</ul>';
+		$html .= '<div class="first fr"><a href="' . $url . '.html">首页</a></div>';
+		$html .= '<div class="prv fr"><a href="' . $url . $this->lastPageNumber . '.html">«</a></div>';
+		$html .= '</div>';
+
+		return $html;		
 	}
 }
