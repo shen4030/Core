@@ -91,20 +91,29 @@ class Page{
 
 	public function getFrontPageHtml()
 	{
-		$url = Router::getArticleUrl();
+		$url = 'article';
+
+		$mark = array_key_exists('markId', $this->requestParam) ? '_' . $this->requestParam['markId'] : '';
+
+		$param = [];
+		if(array_key_exists('search', $this->requestParam)){
+			$param['search'] = $this->requestParam['search'];
+		}
+		
+		;
 		$html = '<div id="page">';
-		$html .= '<div class="next fr"><a href="' . $url . $this->nextPageNumber . '.html">»</a></div>';
-		$html .= '<div class="last fr"><a href="' . $url . $this->countPageNumber . '.html">末页</a></div>';
+		$html .= '<div class="next fr"><a href="' . Router::url($url . $this->nextPageNumber . $mark . '.html', $param) .'">»</a></div>';
+		$html .= '<div class="last fr"><a href="' . Router::url($url . $this->countPageNumber . $mark .'.html', $param).'">末页</a></div>';
 		$html .= '<ul class="pagingUl">';
 
 		foreach ($this->realPageSize as $page) {
-
-			$html .= '<li'.($page === $this->currentPageNumber ? ' class="active"' : '').'><a href="'.Router::url('', $pageNumber).'">'.$page.'</a></li>';
+			$href = Router::url($url.$page.$mark . '.html', $param);
+			$html .= '<li'.($page === $this->currentPageNumber ? ' style="background-color: black;color: #ffffff"' : '').'><a href="'.$href.'">'.$page.'</a></li>';
 		}
 
 		$html .= '</ul>';
-		$html .= '<div class="first fr"><a href="' . $url . '.html">首页</a></div>';
-		$html .= '<div class="prv fr"><a href="' . $url . $this->lastPageNumber . '.html">«</a></div>';
+		$html .= '<div class="first fr"><a href="' . Router::url($url . 1 .$mark .'.html', $param).'">首页</a></div>';
+		$html .= '<div class="prv fr"><a href="' . Router::url($url . $this->lastPageNumber . $mark .'.html', $param).'">«</a></div>';
 		$html .= '</div>';
 
 		return $html;		
