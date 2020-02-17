@@ -108,7 +108,11 @@ class Page{
 
 		foreach ($this->realPageSize as $page) {
 			$href = Router::url($url.$page.$mark . '.html', $param);
-			$html .= '<li'.($page === $this->currentPageNumber ? ' style="background-color: black;color: #ffffff"' : '').'><a href="'.$href.'">'.$page.'</a></li>';
+			if(intval($page) === intval($this->currentPageNumber)){
+				$html .= '<li style="background-color: black;"><a style="color: white;" href="'.$href.'">'.$page.'</a></li>';
+			}else{
+				$html .= '<li><a href="'.$href.'">'.$page.'</a></li>';
+			}
 		}
 
 		$html .= '</ul>';
