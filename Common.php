@@ -275,5 +275,28 @@ if(!function_exists('show_get_param')){
         return isset($_GET[$key]) ? $_GET[$key] : $default;
     }
 }
+if(!function_exists('getMatchCaseRandomString')){
 
+    /**
+     * 生成指定长度区分大小写的随机字符串
+     * @param int $length
+     * @return false|string
+     */
+    function getMatchCaseRandomString($length = 32)
+    {
+        $pool = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
+    }
+}
+if(!function_exists('createNoRepeatString')){
+
+    /**
+     * 生成不重复的随机字符串
+     * @return string
+     */
+    function createNoRepeatString()
+    {
+        return strtoupper(md5(uniqid(md5(microtime(true)),true)));
+    }
+}
 

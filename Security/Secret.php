@@ -13,22 +13,28 @@ class Secret{
     /**
      * 加密字符串
      * @param $string
+     * @param string $key
      * @return bool|string
      */
-	public static function encode($string)
+	public static function encode($string, $key = '')
 	{
-        $key = Config::getConfigByKey('SERCRET_KEY');
+	    if(empty($key)){
+            $key = Config::getConfigByKey('SERCRET_KEY');
+        }
         return self::authcode($string, 'ENCODE', $key);
 	}
 
     /**
      * 解密字符串
      * @param $string
+     * @param string $key
      * @return bool|string
      */
-	public static function decode($string)
+	public static function decode($string, $key = '')
 	{
-        $key = Config::getConfigByKey('SERCRET_KEY');
+	    if(empty($key)){
+            $key = Config::getConfigByKey('SERCRET_KEY');
+        }
         return self::authcode($string, 'DECODE', $key);
 	}
 

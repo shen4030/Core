@@ -34,7 +34,7 @@ class Model{
     /**
      * 从实例池获取实例
      * @param string $model
-     * @return bool
+     * @return Model
      */
     public static function instance($model = '')
     {
