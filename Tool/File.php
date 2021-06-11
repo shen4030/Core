@@ -17,7 +17,7 @@ class File{
         if(isset($config['ext']) && is_array($config['ext'])){
             $this->accessExt = array_merge($this->accessExt, $config['ext']);
         }
-        $this->dirRoot = DOCUMENT_ROOT;
+        $this->dirRoot = DOCUMENT_ROOT . 'Public/';
     }
 
     /**
