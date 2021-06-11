@@ -114,6 +114,9 @@ if(!function_exists('show_status')) {
                 break;
             case 2 :
                 $result = '<font color="red">禁用</font>';
+                break;
+            case 3 :
+                $result = '<font color="bule">私人</font>';
         }
 
         return $result;
